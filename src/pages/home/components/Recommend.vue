@@ -2,7 +2,7 @@
   <div>
     <div class="recommend_title">热销推荐</div>
     <ul>
-      <li class="item border-bottom" v-for="item of recommendList" :key="item.id">
+      <li class="item border-bottom" v-for="item of list" :key="item.id">
         <div class="item_img_wrapper">
           <img :src="item.imgUrl" alt="" class="item_img">
         </div>
@@ -20,29 +20,8 @@
 <script>
 export default {
   name: 'HomeRecommend',
-  data () {
-    return {
-      recommendList: [
-        {
-          id: '0001',
-          imgUrl: 'https://imgs.qunarzz.com/sight/p0/1410/20/27cd9834797042559db76ace659169b9.jpg_256x160_77691980.jpg',
-          title: '八达岭长城',
-          desc: '一定要看那块“不到长城非好汉”碑'
-        },
-        {
-          id: '0002',
-          imgUrl: 'https://imgs.qunarzz.com/sight/p0/1410/20/27cd9834797042559db76ace659169b9.jpg_256x160_77691980.jpg',
-          title: '八达岭长城',
-          desc: '一定要看那块“不到长城非好汉”碑'
-        },
-        {
-          id: '0003',
-          imgUrl: 'https://imgs.qunarzz.com/sight/p0/1410/20/27cd9834797042559db76ace659169b9.jpg_256x160_77691980.jpg',
-          title: '八达岭长城',
-          desc: '一定要看那块“不到长城非好汉”碑'
-        }
-      ]
-    }
+  props: {
+    list: Array
   }
 }
 </script>
