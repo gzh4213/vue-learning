@@ -51,7 +51,9 @@ export default {
     })
   },
   mounted () {
-    this.scroll = new Bscroll(this.$refs.wrapper)
+    this.scroll = new Bscroll(this.$refs.wrapper, {
+      click: true
+    })
   },
   methods: {
     ...mapMutations(['changeCity']),
