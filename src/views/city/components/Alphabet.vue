@@ -36,13 +36,14 @@ export default {
     }
   },
   updated () {
-    this.startY = this.$refs['A'][0].offsetTop
+    this.startY = this.$refs['A'].offsetTop
   },
   methods: {
     handleLetterClick (e) {
       this.$emit('change', e.target.innerText)
     },
     handleTouchStart () {
+      console.log('touchstart')
       this.touchStatus = true
     },
     handleTouchMove (e) {
