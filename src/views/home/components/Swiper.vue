@@ -15,23 +15,21 @@
 </template>
 
 <script>
+import { computed } from 'vue'
 export default {
   name: 'HomeSwiper',
   props: {
     list: Array
   },
-  data () {
-    return {
-      swiperOption: {
-        pagination: '.swiper-pagination',
-        loop: true
-      }
+  setup (props) {
+    const swiperOption = {
+      pagination: '.swiper-pagination',
+      loop: true
     }
-  },
-  computed: {
-    showSwiper () {
-      return this.list.length
-    }
+    const showSwiper = computed(() => {
+      return props.list.length
+    })
+    return { swiperOption, showSwiper}
   }
 }
 </script>
