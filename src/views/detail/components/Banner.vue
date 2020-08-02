@@ -15,6 +15,7 @@
 <script>
 import CommonGallary from 'common/gallary/Gallary'
 import FadeAnimation from 'common/fade/FadeAnimation'
+import { ref } from 'vue'
 export default {
   name: 'Banner',
   props: {
@@ -26,18 +27,15 @@ export default {
     CommonGallary,
     FadeAnimation
   },
-  data () {
-    return {
-      showGallary: false
+  setup() {
+    const showGallary = ref(false)
+    function handleBannerClick () {
+      showGallary.value = true
     }
-  },
-  methods: {
-    handleBannerClick () {
-      this.showGallary = true
-    },
-    handleGallaryClick () {
-      this.showGallary = false
+    function handleGallaryClick () {
+      showGallary.value = false
     }
+    return { showGallary, handleBannerClick, handleGallaryClick }
   }
 }
 </script>
