@@ -1,13 +1,14 @@
 <template>
   <div>
     <city-header></city-header>
-    <city-search :cities="cities"></city-search>
-    <city-list :cities="cities" :hot="hotCities" :letter="letter"></city-list>
-    <city-alphabet :cities="cities" @change="handleLetterChange"></city-alphabet>
+    <city-search :cities="data.cities"></city-search>
+    <city-list :cities="data.cities" :hot="data.hotCities" :letter="letter"></city-list>
+    <city-alphabet :cities="data.cities" @change="handleLetterChange"></city-alphabet>
   </div>
 </template>
 
 <script>
+import { reactive, onMounted, ref } from "vue";
 import axios from 'axios'
 import CityHeader from './components/Header'
 import CitySearch from './components/Search'
@@ -21,35 +22,42 @@ export default {
     CityList,
     CityAlphabet
   },
-  data () {
-    return {
+  setup () {
+    const { letter, handleLetterChange } = useLetterLogic()
+    const { data } = useCityLogic() 
+    return { data, handleLetterChange, letter }
+  }
+}
+
+function useCityLogic () {
+    const data = reactive({
       cities: {},
       hotCities: [],
-      letter: ''
-    }
-  },
-  mounted () {
-    this.getCityInfo()
-  },
-  methods: {
-    getCityInfo () {
-      axios.get('/api/city.json')
-        .then(this.handleGetCityInfoSucc)
-    },
-    handleGetCityInfoSucc (res) {
+    })
+    async function getCityInfo () {
+      let res = await axios.get('/api/city.json')
       res = res.data
       console.log(res)
       if (res.ret && res.data) {
-        const data = res.data
-        this.cities = data.cities
-        this.hotCities = data.hotCities
+        const result = res.data
+        data.cities = result.cities
+        data.hotCities = result.hotCities
       }
-    },
-    handleLetterChange (letter) {
-      // console.log(letter)
-      this.letter = letter
     }
+    
+    onMounted(() => {
+      getCityInfo()
+    })
+
+    return { data }
+}
+
+function useLetterLogic () {
+  let letter = ref('')
+  function handleLetterChange (value) {
+    letter.value = value
   }
+  return { letter, handleLetterChange }
 }
 </script>
 
